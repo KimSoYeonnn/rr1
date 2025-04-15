@@ -1,21 +1,21 @@
 import {useQuery} from "@tanstack/react-query";
+import { useSearchParams } from "react-router";
 import {testTodoList} from "~/api/todoAPI";
 
 
 function TodoListComponent () {
 
+    const [searchParams] = useSearchParams();
+
+    const pageStr = searchParams.get("page") || "1"
+    const sizeStr = searchParams.get("size") || "10"
+
+    console.log("pageStr: ", pageStr, " sizeStr: ", sizeStr)
+
     // Queries
     const query = useQuery({
         queryKey: ['todos'],
-        queryFn: async() => {
-
-
-            await new Promise(resolve => setTimeout(resolve, 2000));
-
-            const todos:Todo[] = await testTodoList()
-
-            return todos
-        }
+        queryFn: () => testTodoList(pageStr, sizeStr)
     })
 
     const {isFetching, data, error } = query
