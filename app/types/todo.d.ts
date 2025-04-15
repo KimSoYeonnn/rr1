@@ -6,3 +6,8 @@ interface Todo {
     "regDate"?: Date | null,
     "modDate"?: Date | null
 }
+
+interface TodoAdd {
+    title: string,
+    writer: string,
+}
